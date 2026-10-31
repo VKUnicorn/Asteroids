@@ -1,5 +1,7 @@
 
 using Core;
+using Core.GameState;
+using Core.UI;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using R3;
@@ -17,7 +19,8 @@ namespace Nodes {
         }
 
         protected override void OnConstruct() {
-            
+            AddNode(new GameStateManagerNode(this));
+            AddNode(new UIManagerNode(_ctx.UIRoot));
         }
 
         protected override void OnAfterActivate() {
@@ -36,7 +39,7 @@ namespace Nodes {
 
                 /*
                 await AddNode(_game = new GameNode(_ctx)).InitNodes();
-                state.Reset<LoaderState>(StateSwitchFlagsEnum.SkipAnimations);
+                state.Reset<LoaderState>();
                 */
                 IsLoaded = true;
             }

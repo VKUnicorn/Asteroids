@@ -7,8 +7,8 @@ using JetBrains.Annotations;
 namespace Nodes {
     [Serializable]
     public class AppCtx {
+        public Transform UIRoot;
         /*
-        [Required] public UIRoot UIRoot;
         [Required] public Camera UICamera;
         [Required] public Camera WorldCamera;
         [Required] public WorldRoot WorldRoot;

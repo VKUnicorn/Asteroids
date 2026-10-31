@@ -4,6 +4,8 @@
     "references": [
         "Morpeh",
         "Core.Essentials",
+        "Core.GameState",
+        "Core.UI",
         "R3.Unity",
         "UniTask"
     ],

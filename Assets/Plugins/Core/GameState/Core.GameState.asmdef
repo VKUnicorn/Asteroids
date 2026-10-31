@@ -1,0 +1,18 @@
+{
+    "name": "Core.GameState",
+    "rootNamespace": "",
+    "references": [
+        "Core.Essentials",
+        "Core.UI",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
