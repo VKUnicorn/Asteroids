@@ -1,0 +1,17 @@
+{
+    "name": "Asteroids",
+    "rootNamespace": "",
+    "references": [
+        "Morpeh",
+        "Core.Essentials"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

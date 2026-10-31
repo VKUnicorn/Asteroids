@@ -2,7 +2,7 @@
     "name": "Morpeh",
     "rootNamespace": "",
     "references": [
-        "Core.Essentials"
+        "GUID:fd04925ab3960664f91fb6ac7cef93f7"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
