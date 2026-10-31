@@ -3,7 +3,8 @@
     "rootNamespace": "",
     "references": [
         "Morpeh",
-        "Core.Essentials"
+        "Core.Essentials",
+        "R3.Unity"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
