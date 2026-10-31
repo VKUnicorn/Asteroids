@@ -1,7 +1,11 @@
 {
     "name": "Core.Essentials",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:77221876cc6b8244180b96e320b1bcd4",
+        "GUID:3c78f1dfe589d4b41b0f08710e595c34"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

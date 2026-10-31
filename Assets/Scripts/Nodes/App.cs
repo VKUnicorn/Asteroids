@@ -1,0 +1,67 @@
+using System;
+using Core;
+using UnityEngine;
+using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
+
+namespace Nodes {
+    [Serializable]
+    public class AppCtx {
+        /*
+        [Required] public UIRoot UIRoot;
+        [Required] public Camera UICamera;
+        [Required] public Camera WorldCamera;
+        [Required] public WorldRoot WorldRoot;
+        [Required] public GameConfig Config;
+        */
+    }
+
+    public class App : MonoBehaviour {
+        private static App _instance;
+        public static App Instance => _instance;
+
+        public static bool IsQuitting { get; private set; }
+
+        [SerializeField] private AppCtx Ctx;
+        private static RootNode _root;
+
+        private async void Start() {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.playModeStateChanged += OnEditorApplicationOnplayModeStateChanged;
+#endif
+            _instance = this;
+
+            Application.targetFrameRate = 60;
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+            ReloadAsync().Forget();
+        }
+
+        public async UniTask ReloadAsync() {
+            if (_root != null) {
+                await _root.DisposeAsync();
+                await UniTask.Yield();
+            }
+
+            _root = new RootNode(Ctx);
+            _root.InitNodes().Forget();
+        }
+
+        private void OnApplicationQuit() => IsQuitting = true;
+
+#if UNITY_EDITOR
+        private void OnEditorApplicationOnplayModeStateChanged(UnityEditor.PlayModeStateChange state) {
+            IsQuitting = state != UnityEditor.PlayModeStateChange.EnteredPlayMode;
+        }
+#endif
+
+#if UNITY_EDITOR
+        // ReSharper disable once AsyncVoidMethod
+        private async void OnDestroy() {
+            UnityEditor.EditorApplication.playModeStateChanged -= OnEditorApplicationOnplayModeStateChanged;
+            await _root.DisposeAsync();
+            await UniTask.Yield();
+        }
+#endif // UNITY_EDITOR
+    }
+}
