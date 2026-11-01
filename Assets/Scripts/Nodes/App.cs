@@ -25,7 +25,7 @@ namespace Nodes {
         [SerializeField] private AppCtx Ctx;
         private static RootNode _root;
 
-        private async void Start() {
+        private void Start() {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.playModeStateChanged += OnEditorApplicationOnplayModeStateChanged;
 #endif

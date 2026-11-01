@@ -1,5 +1,10 @@
+using System;
+using Core.Tools;
+
 namespace Core.UI {
-    public abstract class UIBaseController {
+    public abstract class UIBaseController : IDisposable {
+        protected readonly Lifetime Lifetime = new ();
+
         internal abstract UIBaseModel BaseModel { get; }
 
         /// <summary>
@@ -23,6 +28,8 @@ namespace Core.UI {
                 BaseModel.Opened.Value = false;
             }
         }
+
+        public void Dispose() => Lifetime.Dispose();
     }
 
     public abstract class UIBaseController<TModel> : UIBaseController where TModel : UIBaseModel, new() {

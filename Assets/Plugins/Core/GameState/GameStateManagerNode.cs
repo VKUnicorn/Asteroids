@@ -60,6 +60,8 @@ namespace Core.GameState {
             SwitchAsync(operation, stateType).Forget();
         }
 
+        bool IGameStateModel.HasActiveTransition => _isSwitching || _operations.Count > 0;
+
         void IGameStateModel.Set<T>() => _operations.Enqueue((OperationEnum.Set, typeof(T)));
 
         void IGameStateModel.Set<T, TContext>(Action<TContext> contextMutator) {

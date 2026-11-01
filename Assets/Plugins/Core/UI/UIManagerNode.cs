@@ -43,6 +43,7 @@ namespace Core.UI {
                 }
 
                 controller = (UIBaseController)Activator.CreateInstance(controllerType);
+                controller.AddTo(Lifetime);
                 _controllers.Add(controllerType, controller);
                 Container.Inject(controller, this);
                 controller.OnModelSet();

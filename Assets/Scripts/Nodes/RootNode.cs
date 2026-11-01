@@ -4,6 +4,7 @@ using Core.Attributes;
 using Core.GameState;
 using Core.UI;
 using Cysharp.Threading.Tasks;
+using Nodes.Battle;
 using Nodes.State;
 using Sirenix.OdinInspector;
 using R3;
@@ -26,6 +27,7 @@ namespace Nodes {
             AddNode(new GameStateManagerNode(this));
             AddNode(new UIManagerNode(_ctx.UIRoot));
             AddNode(new LoaderNode(), false);
+            AddNode(new BattleSimulationNode(), false);
         }
 
         protected override void OnAfterActivate() {

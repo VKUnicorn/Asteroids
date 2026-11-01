@@ -3,6 +3,11 @@ using System;
 namespace Core.GameState {
     public interface IGameStateModel {
         /// <summary>
+        /// Switch is in progress or queued
+        /// </summary>
+        bool HasActiveTransition { get; }
+
+        /// <summary>
         /// Add T to stack, switch
         /// </summary>
         void Set<T>() where T : BaseGameState;
