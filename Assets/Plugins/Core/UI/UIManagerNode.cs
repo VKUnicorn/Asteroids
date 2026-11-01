@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Object = UnityEngine.Object;
 
 namespace Core.UI {
     /// <summary>
@@ -13,7 +14,8 @@ namespace Core.UI {
     /// </summary>
     public class UIManagerNode : FacadeNode<IUIManager>, IUIManager {
         private readonly Transform _root;
-        private readonly Dictionary<Type, UIBaseController> _controllers = new();
+        private readonly Dictionary<Type, UIBaseController> _controllers = new ();
+        private Transform _spawnRoot;
 
         public UIManagerNode(Transform root) {
             _root = root;
@@ -21,6 +23,17 @@ namespace Core.UI {
 
         protected override void OnConstruct() {
             RegisterInParent(this);
+
+            // Canvases are spawned under an inactive parent, so bindings Awake only after the model is set
+            var spawnRoot = new GameObject("[Spawn]");
+            spawnRoot.SetActive(false);
+            spawnRoot.transform.SetParent(_root, false);
+            _spawnRoot = spawnRoot.transform;
+            Disposable.Create(() => {
+                if (spawnRoot != null) {
+                    Object.Destroy(spawnRoot);
+                }
+            }).AddTo(Lifetime);
         }
 
         async UniTask IUIManager.ActivateUIControllerAsync(Type controllerType, bool setActive) {
@@ -41,7 +54,7 @@ namespace Core.UI {
 
         private async UniTask SpawnCanvasAsync(UIBaseModel model) {
             var address = model.GetType().Name.Replace("Model", "");
-            var instance = await Addressables.InstantiateAsync(address, _root);
+            var instance = await Addressables.InstantiateAsync(address, _spawnRoot);
             Disposable.Create(() => {
                 if (instance != null) {
                     Addressables.ReleaseInstance(instance);
@@ -49,6 +62,7 @@ namespace Core.UI {
             }).AddTo(Lifetime);
 
             instance.GetComponent<UICanvas>().SetModel(model);
+            instance.transform.SetParent(_root, false);
         }
     }
 }

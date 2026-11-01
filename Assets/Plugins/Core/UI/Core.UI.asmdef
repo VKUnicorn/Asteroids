@@ -2,6 +2,7 @@
     "name": "Core.UI",
     "rootNamespace": "",
     "references": [
+        "Core.Bindings",
         "Core.Essentials",
         "UniTask",
         "UniTask.Addressables",

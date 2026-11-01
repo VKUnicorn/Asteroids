@@ -3,6 +3,7 @@
     "rootNamespace": "",
     "references": [
         "Morpeh",
+        "Core.Bindings",
         "Core.Essentials",
         "Core.GameState",
         "Core.UI",
