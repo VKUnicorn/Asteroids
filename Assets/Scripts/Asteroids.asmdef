@@ -8,7 +8,9 @@
         "Core.GameState",
         "Core.UI",
         "R3.Unity",
-        "UniTask"
+        "UniTask",
+        "Unity.Addressables",
+        "Unity.ResourceManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

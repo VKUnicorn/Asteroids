@@ -523,6 +523,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Asteroids::Nodes.App
   Ctx:
     UIRoot: {fileID: 680860577}
+    Config: {fileID: 11400000, guid: 81add2f8fd3666e4897fda5e6461ca0c, type: 2}
+    UICamera: {fileID: 1232135872}
+    WorldCamera: {fileID: 963194227}
 --- !u!4 &1411581513
 Transform:
   m_ObjectHideFlags: 0

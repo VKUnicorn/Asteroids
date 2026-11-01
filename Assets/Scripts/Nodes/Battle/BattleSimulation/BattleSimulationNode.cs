@@ -1,10 +1,14 @@
+using Config;
 using Core;
+using Core.Attributes;
 using Cysharp.Threading.Tasks;
 using Morpeh;
 using UnityEngine;
 
 namespace Nodes.Battle {
     public class BattleSimulationNode : Node {
+        [Inject] private IGameConfig _gameConfig;
+
         private BattleSimulation _simulation;
         private BattlePlayer _player;
 
@@ -14,6 +18,7 @@ namespace Nodes.Battle {
             var input = new BattleSimulationInput {
                 World = World.Create(),
                 Events = new WorldEvents(),
+                GameConfig = _gameConfig,
             };
 
             var context = new BattleSimulationContext(input, Time.fixedDeltaTime);

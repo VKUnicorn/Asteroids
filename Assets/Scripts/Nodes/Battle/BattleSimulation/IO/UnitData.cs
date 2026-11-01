@@ -1,3 +1,4 @@
+using Config;
 using Morpeh;
 using Nodes.Battle.Units;
 
@@ -7,6 +8,7 @@ namespace Nodes.Battle {
     /// </summary>
     public class UnitData {
         public Entity Self;
+        public UnitPreset Preset;
         public UnitSideEnum UnitSide;
     }
 }

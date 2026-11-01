@@ -1,4 +1,5 @@
 
+using Config;
 using Core;
 using Core.Attributes;
 using Core.GameState;
@@ -24,6 +25,8 @@ namespace Nodes {
         }
 
         protected override void OnConstruct() {
+            RegisterInChildren<IGameConfig>(_ctx.Config);
+
             AddNode(new GameStateManagerNode(this));
             AddNode(new UIManagerNode(_ctx.UIRoot));
             AddNode(new LoaderNode(), false);

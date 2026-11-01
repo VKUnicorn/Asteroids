@@ -1,18 +1,18 @@
 using System;
+using Config;
 using Core;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
 
 namespace Nodes {
     [Serializable]
     public class AppCtx {
         public Transform UIRoot;
+        public GameConfig Config;
+        public Camera UICamera;
+        public Camera WorldCamera;
         /*
-        [Required] public Camera UICamera;
-        [Required] public Camera WorldCamera;
         [Required] public WorldRoot WorldRoot;
-        [Required] public GameConfig Config;
         */
     }
 
