@@ -4,6 +4,7 @@ namespace Nodes.Battle.Systems {
     public abstract class BaseSystem {
         protected BattleSimulationContext Context { get; private set; }
         protected World World => Context.Input.World;
+        protected WorldEvents Events => Context.Input.Events;
 
         public void Initialize(BattleSimulationContext context) {
             Context = context;

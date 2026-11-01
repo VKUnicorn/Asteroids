@@ -13,6 +13,7 @@ namespace Nodes.Battle {
         protected override UniTask OnActivate() {
             var input = new BattleSimulationInput {
                 World = World.Create(),
+                Events = new WorldEvents(),
             };
 
             var context = new BattleSimulationContext(input, Time.fixedDeltaTime);

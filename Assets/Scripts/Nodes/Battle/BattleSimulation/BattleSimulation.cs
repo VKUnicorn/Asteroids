@@ -5,7 +5,9 @@ using Nodes.Battle.Systems;
 
 namespace Nodes.Battle {
     public class BattleSimulation : IDisposable {
-        private readonly List<BaseSystem> _systems = new ();
+        private readonly List<BaseSystem> _systems = new () {
+            new UnitStatsModifierUpdateSystem(),
+        };
 
         public BattleSimulationContext Context { get; }
 
@@ -27,12 +29,16 @@ namespace Nodes.Battle {
 
         private void DoTick() {
             var world = Context.Input.World;
+            var events = Context.Input.Events;
             Context.Clock.DoTick();
+            events.FrameStart();
             world.UpdateFilters();
             foreach (var system in _systems) {
                 system.OnUpdate();
                 world.UpdateFilters();
             }
+
+            events.FrameComplete();
         }
 
         public void Dispose() => Context.Dispose();
