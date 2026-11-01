@@ -11,9 +11,9 @@ namespace Core.GameState {
         [Inject] private IUIManager _ui;
 
         private readonly Node _root;
-        private readonly Dictionary<Type, BaseGameState> _states = new();
-        private readonly List<BaseGameState> _stack = new();
-        private readonly Queue<(OperationEnum Operation, Type StateType)> _operations = new();
+        private readonly Dictionary<Type, BaseGameState> _states = new ();
+        private readonly List<BaseGameState> _stack = new ();
+        private readonly Queue<(OperationEnum Operation, Type StateType)> _operations = new ();
         private bool _isSwitching;
 
         public GameStateManagerNode(Node root) {
@@ -76,11 +76,12 @@ namespace Core.GameState {
             try {
                 var from = _stack.Count > 0 ? _stack[^1] : null;
                 switch (operation) {
-                    case OperationEnum.Set:
+                    case OperationEnum.Set: {
                         _stack.Remove(_states[stateType]);
                         _stack.Add(_states[stateType]);
                         break;
-                    case OperationEnum.Back:
+                    }
+                    case OperationEnum.Back: {
                         if (_stack.Count < 2) {
                             Debug.LogWarning("Can't go back. Last state!");
                             return;
@@ -88,10 +89,12 @@ namespace Core.GameState {
 
                         _stack.RemoveAt(_stack.Count - 1);
                         break;
-                    case OperationEnum.Reset:
+                    }
+                    case OperationEnum.Reset: {
                         _stack.Clear();
                         _stack.Add(_states[stateType]);
                         break;
+                    }
                 }
 
                 var to = _stack[^1];
@@ -120,8 +123,7 @@ namespace Core.GameState {
             }
         }
 
-        private UniTask ApplyAsync(List<(Type Type, bool SetActive)> changes) =>
-            UniTask.WhenAll(changes.Select(change => ApplyAsync(change.Type, change.SetActive)));
+        private UniTask ApplyAsync(List<(Type Type, bool SetActive)> changes) => UniTask.WhenAll(changes.Select(change => ApplyAsync(change.Type, change.SetActive)));
 
         private UniTask ApplyAsync(Type type, bool setActive) {
             if (type.IsSubclassOf(typeof(Node)) == false) {
@@ -139,7 +141,8 @@ namespace Core.GameState {
 
         private static IEnumerable<Type> FindStateTypes() {
             var assemblyName = typeof(BaseGameState).Assembly.GetName().Name;
-            return AppDomain.CurrentDomain.GetAssemblies()
+            return AppDomain.CurrentDomain
+                .GetAssemblies()
                 .Where(assembly => assembly.GetReferencedAssemblies().Any(reference => reference.Name == assemblyName))
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(type => type.IsAbstract == false && type.IsSubclassOf(typeof(BaseGameState)));

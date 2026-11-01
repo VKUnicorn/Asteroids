@@ -1,14 +1,18 @@
 
 using Core;
+using Core.Attributes;
 using Core.GameState;
 using Core.UI;
 using Cysharp.Threading.Tasks;
+using Nodes.State;
 using Sirenix.OdinInspector;
 using R3;
 using UnityEngine;
 
 namespace Nodes {
     public class RootNode : RootUpdaterNode {
+        [Inject] private IGameStateModel _state;
+
         private readonly AppCtx _ctx;
         private bool _isReloading;
 
@@ -21,6 +25,7 @@ namespace Nodes {
         protected override void OnConstruct() {
             AddNode(new GameStateManagerNode(this));
             AddNode(new UIManagerNode(_ctx.UIRoot));
+            AddNode(new LoaderNode(), false);
         }
 
         protected override void OnAfterActivate() {
@@ -37,10 +42,8 @@ namespace Nodes {
             try {
                 await UniTask.Yield();
 
-                /*
-                await AddNode(_game = new GameNode(_ctx)).InitNodes();
-                state.Reset<LoaderState>();
-                */
+                // await AddNode(_game = new GameNode(_ctx)).InitNodes();
+                _state.Reset<LoaderState>();
                 IsLoaded = true;
             }
             finally {
